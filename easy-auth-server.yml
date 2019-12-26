@@ -1,0 +1,40 @@
+server:
+  port: 9092
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 9091
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+
+
+#Mongo configuration
+mongo:
+  host: 127.0.0.1
+  port: 27017
+  dbname: Easy-Auth-Server
+
+# Logging configuration
+logging:
+  level:
+    org.springframework: INFO
+    gr.personal.auth: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: auth-service.logs
+
+# Increase the Hystrix timeout to 10s (globally)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
